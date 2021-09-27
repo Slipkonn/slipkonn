@@ -814,7 +814,7 @@
 <p style="text-align: center;font-size: 12px;font-family: Helvetica, Verdana, sans-serif;"><a href="{{ unsubscribe_url }}" style="color: #979797;text-decoration: none;">Unsubscribe from our emails</a></p>
 <div class="service-element">
   <button class="btn btn-editing" data-state="off" contenteditable="false">Turn On Editing</button>
-  <button class="btn btn-copy">Copy HTML</button>
+  <button class="btn btn-copy" contenteditable="false">Copy HTML</button>
 </div>
 </body>
 
@@ -876,6 +876,9 @@
         console.log(newDoc.documentElement.innerHTML);
 
         navigator.clipboard.writeText("<html>"+newDoc.documentElement.innerHTML+"</html>");
+
+        alert("HTML copied!");
+
       }
     }
   })
