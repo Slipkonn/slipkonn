@@ -493,6 +493,7 @@
       <!-- Grey box -->
       <tr class="section-edge-top">
         <td class="grey-box-section">
+          <div></div>
           <div class="section-image-mobile" style="padding-bottom: 20px;max-width: 360px;">
             <img src="https://mcusercontent.com/217a2d2eb5e816baac7fb984c/images/ff5137e9-b98f-7daa-1aaa-dd7bfbb0aa89.png" alt="Portfolio illustration" width="100%">
           </div>
@@ -877,8 +878,14 @@
 
         navigator.clipboard.writeText("<html>"+newDoc.documentElement.innerHTML+"</html>");
 
-        alert("HTML copied!");
+        e.target.style.backgroundColor = "#15b32a";
 
+        e.target.innerText = "Copied !!!";
+
+        setTimeout(() => {
+          e.target.style.backgroundColor = "#2196f3";
+          e.target.innerText = "Copy HTML";
+        }, 2000);
       }
     }
   })
