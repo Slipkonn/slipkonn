@@ -834,12 +834,14 @@
 <br>
 <p style="text-align: center;font-size: 12px;font-family: Helvetica, Verdana, sans-serif;"><a href="{{ unsubscribe_url }}" style="color: #979797;text-decoration: none;">Unsubscribe from our emails</a></p>
 <div class="service-element">
-  <button class="btn btn-editing" data-state="off" contenteditable="false">Turn On Editing</button>
+  <button class="btn btn-editing" data-state="off" contenteditable="false">Turn On Text Edit</button>
   <button class="btn btn-copy" contenteditable="false">Copy HTML</button>
 </div>
 </body>
 
 <script>
+  let textEditMode = false;
+
   document.addEventListener("DOMContentLoaded", function(){
     console.log("DCL");
 
@@ -853,7 +855,7 @@
     sections.forEach(section => {
       section.querySelector("div").appendChild(btnDelete.cloneNode(true));
     });
-  })
+  });
 
   document.addEventListener("click", function(e){
     if (e.target) {
@@ -871,14 +873,18 @@
           document.body.contentEditable = 'true';
           document.designMode='on';
           preHeader.setAttribute("style", "display: block; padding: 20px;color: #333;font-size: 14px;text-align: center;font-family: Helvetica, Verdana, sans-serif;");
-          btn.innerText = "Turn Editing Off";
+          btn.innerText = "Turn Off Text Edit";
           btn.dataset.state = "on";
+          textEditMode = true;
+          e.target.style.backgroundColor = "#15b32a";
         } else {
           document.body.contentEditable = 'false';
           document.designMode='off';
           preHeader.setAttribute("style", "display: none; max-height: 0px; overflow: hidden;");
-          btn.innerText = "Turn On Editing";
+          btn.innerText = "Turn On Text Edit";
           btn.dataset.state = "off";
+          textEditMode = false;
+          e.target.style.backgroundColor = "#2196f3";
         }
       }
 
@@ -906,6 +912,33 @@
           e.target.style.backgroundColor = "#2196f3";
           e.target.innerText = "Copy HTML";
         }, 2000);
+      }
+
+      if(e.target.tagName === "A" || e.target.closest("a")) {
+        if (!textEditMode) {
+          e.preventDefault();
+
+          const link = e.target.tagName === "A" ? e.target : e.target.closest("a");
+          let newHref = prompt("Edit link href", link.href);
+
+          if (newHref && newHref !== link.href) {
+            console.log('Href changed, new href is', newHref);
+            link.href = newHref;
+          }
+        }
+      }
+
+      if(e.target.tagName === "IMG") {
+        if(!e.target.closest("a")) {
+          console.log('Image clicked');
+          const image = e.target;
+          let newSrc = prompt("Edit image src", image.src);
+
+          if (newSrc && newSrc !== image.src) {
+            console.log('SRC changed, new src is', newSrc);
+            image.src = newSrc;
+          }
+        }
       }
     }
   })
